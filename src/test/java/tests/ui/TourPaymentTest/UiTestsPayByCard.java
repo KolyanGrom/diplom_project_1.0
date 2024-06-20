@@ -51,7 +51,8 @@ public class UiTestsPayByCard {
         PaymentPage paymentPage = tourPage.payByCard();
         String notificationMsg = paymentPage.validPayment(approvedCard);
 
-        assertTrue(notificationMsg.contains(approvedCardMsg));
+        assertTrue(notificationMsg.contains(approvedCardMsg),
+                "Нотификация не содержит статус Успешно");
     }
 
     @Test
@@ -62,7 +63,8 @@ public class UiTestsPayByCard {
         PaymentPage paymentPage = tourPage.payByCard();
         String notificationMsg = paymentPage.validPayment(declinedCard);
 
-        assertTrue(notificationMsg.contains(declinedCardMsg));
+        assertTrue(notificationMsg.contains(declinedCardMsg),
+                "Нотификация не содержит статус Успешно");
         //отображается уведомление успешно вместо ошибки
     }
 
@@ -74,7 +76,8 @@ public class UiTestsPayByCard {
         PaymentPage paymentPage = tourPage.payByCard();
         String notificationMsg = paymentPage.validPayment(unregisteredCard);
 
-        assertTrue(notificationMsg.contains(declinedCardMsg));
+        assertTrue(notificationMsg.contains(declinedCardMsg),
+                "Нотификация не содержит статус Успешно");
         //отображаются оба уведомления поверх ошибка, снизу успешно, поэтому ловиться первый элемент успешно
     }
 

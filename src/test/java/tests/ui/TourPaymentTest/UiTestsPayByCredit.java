@@ -41,7 +41,7 @@ public class UiTestsPayByCredit {
     static void tearDownAll() {
         SelenideLogger.removeListener("allure");
     }
-    
+
     @Test
     @DisplayName("Оплата тура в кредит со статусом «APPROVED»")
     public void creditForTourByCardStatusApproved() {
@@ -50,7 +50,8 @@ public class UiTestsPayByCredit {
         PaymentPage paymentPage = tourPage.payByCredit();
         String notificationMsg = paymentPage.validPayment(approvedCard);
 
-        assertTrue(notificationMsg.contains(approvedCardMsg));
+        assertTrue(notificationMsg.contains(approvedCardMsg),
+                "Нотификация не содержит статус Успешно");
     }
 
     @Test
@@ -61,7 +62,8 @@ public class UiTestsPayByCredit {
         PaymentPage paymentPage = tourPage.payByCredit();
         String notificationMsg = paymentPage.validPayment(declinedCard);
 
-        assertTrue(notificationMsg.contains(declinedCardMsg));
+        assertTrue(notificationMsg.contains(declinedCardMsg),
+                "Нотификация не содержит статус Успешно");
         //отображается уведомление успешно вместо ошибки
     }
 
@@ -73,7 +75,8 @@ public class UiTestsPayByCredit {
         PaymentPage paymentPage = tourPage.payByCredit();
         String notificationMsg = paymentPage.validPayment(unregisteredCard);
 
-        assertTrue(notificationMsg.contains(declinedCardMsg));
+        assertTrue(notificationMsg.contains(declinedCardMsg),
+                "Нотификация не содержит статус Успешно");
         //отображаются оба уведомления поверх ошибка, снизу успешно, поэтому ловиться первый элемент успешно
     }
 
