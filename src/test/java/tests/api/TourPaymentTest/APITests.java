@@ -1,4 +1,4 @@
-package tests;
+package tests.api.TourPaymentTest;
 
 import com.codeborne.selenide.logevents.SelenideLogger;
 import data.CardInfo;
@@ -7,12 +7,13 @@ import org.junit.jupiter.api.*;
 
 import static api.RequestGenerator.postPaymentByCard;
 import static api.RequestGenerator.postPaymentByCredit;
+import static data.DataHelper.generateInValidCardInfo;
 import static data.DataHelper.generateValidCardInfo;
 import static data.SQLHelper.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TourPaymentAPITest {
+public class APITests {
     private final String expectedApproved = "APPROVED";
     private final String expectedDeclined = "DECLINED";
     private final String expectedAmount = "4500000";
@@ -35,7 +36,7 @@ public class TourPaymentAPITest {
     @Test
     @DisplayName("Отправка запроса на оплату тура по дебетовой карте со статусом “APPROVED”")
     public void payByCardStatusApproved() {
-        CardInfo approvedCard = generateValidCardInfo(0);
+        CardInfo approvedCard = generateValidCardInfo();
 
         String paymentStatusResponse = postPaymentByCard(approvedCard);
         String paymentStatusDB = getStatusFromPaymentEntity();
@@ -51,9 +52,9 @@ public class TourPaymentAPITest {
     @Test
     @DisplayName("Отправка запроса на оплату тура по дебетовой карте со статусом “DECLINED”")
     public void payByCardStatusDeclined() {
-        CardInfo approvedCard = generateValidCardInfo(1);
+        CardInfo notapprovedCard = generateInValidCardInfo();
 
-        String paymentStatusResponse = postPaymentByCard(approvedCard);
+        String paymentStatusResponse = postPaymentByCard(notapprovedCard);
         String paymentStatusDB = getStatusFromPaymentEntity();
         String paymentAmount = getAmountFromPaymentEntity();
 
@@ -67,7 +68,7 @@ public class TourPaymentAPITest {
     @Test
     @DisplayName("Отправка запроса на оплату тура в кредит по карте со статусом “APPROVED”")
     public void payByCreditStatusApproved() {
-        CardInfo approvedCard = generateValidCardInfo(0);
+        CardInfo approvedCard = generateValidCardInfo();
 
         String paymentStatusResponse = postPaymentByCredit(approvedCard);
         String paymentStatusDB = getStatusFromCreditEntity();
@@ -81,9 +82,9 @@ public class TourPaymentAPITest {
     @Test
     @DisplayName("Отправка запроса на оплату тура в кредит по карте со статусом “DECLINED”")
     public void payByCreditStatusDeclined() {
-        CardInfo approvedCard = generateValidCardInfo(1);
+        CardInfo notapprovedCard = generateInValidCardInfo();
 
-        String paymentStatusResponse = postPaymentByCredit(approvedCard);
+        String paymentStatusResponse = postPaymentByCredit(notapprovedCard);
         String paymentStatusDB = getStatusFromCreditEntity();
 
         assertAll(

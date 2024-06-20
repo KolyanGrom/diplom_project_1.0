@@ -53,11 +53,14 @@ public class DataHelper {
         return sb.toString();
     }
 
-    public static CardInfo generateValidCardInfo(int status) {
-        if (status == 0) {
-            return new CardInfo(approvedCardNumber, generateMonth(), generateYear(3), generateOwner(), generateNumber(3));
+    public static CardInfo generateValidCardInfo() {
 
-        }
+        return new CardInfo(approvedCardNumber, generateMonth(), generateYear(3), generateOwner(), generateNumber(3));
+
+    }
+
+    public static CardInfo generateInValidCardInfo() {
+
         return new CardInfo(declinedCardNumber, generateMonth(), generateYear(3), generateOwner(), generateNumber(3));
     }
 
